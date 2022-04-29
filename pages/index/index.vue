@@ -2,19 +2,19 @@
 	<view class="banner">
 
 		<view>
-			<!-- <uni-notice-bar scrollable="true" speed="10px" text="[单行] 这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏"></uni-notice-bar> -->
-			<uni-notice-bar showIcon="true" text="让每个人都能享受到电影带来的乐趣!"></uni-notice-bar>
-			<uni-notice-bar showIcon="true" text="微信小程序搜索: 痕迹电影"></uni-notice-bar>
+			<!-- <uni-notice-bar showIcon="true" text="让每个人都能享受到电影带来的乐趣!"></uni-notice-bar> -->
+			<uni-notice-bar class='bar' showIcon="true" :text='notice_text'>
+			</uni-notice-bar>
 		</view>
 
 		<view class="search">
-			<uni-easyinput clearable type="text" v-model="searchKey" placeholder="请输入影视关键字来搜索" maxlength=20 clearSize=30
-				confirmType="search">
+			<uni-easyinput clearable type="text" v-model="searchKey" placeholder="请输入影视关键字来搜索"
+				placeholder-class="center" maxlength=20 clearSize=30 confirmType="search">
 			</uni-easyinput>
 			<button @click="getSearch('fpdy')" style="display: flex; justify-content: center;">
 				搜索
 				<view style="color: #CCCCCC;padding-left: 10rpx;">
-					(接口来源:fpdy)
+					(来源:fpdy)
 				</view>
 
 
@@ -22,7 +22,7 @@
 			<button @click="getSearch('btdx')" style="display: flex; justify-content: center;">
 				搜索
 				<view style="color: #CCCCCC;padding-left: 10rpx;">
-					(接口来源:btdx)
+					(来源:btdx)
 				</view>
 
 
@@ -39,27 +39,40 @@
 
 
 		<view class="srcbox">
-			<h1 style="color:red">{{searchTitle}}</h1>
-			<view scroll-y="true" v-for="(item,index) in article" style="margin-top: 40rpx;">
-				<span class="movie_title">{{index+1}}.{{item.title}}</span>
-				<view style="height:40rpx"></view>
+			<view style="color:#4d4442">{{searchTitle}}</view>
 
-				<uni-card v-for="(v,i) in item.data" mode="basic" :is-shadow="false" :isFull="true" note="true"
-					style="margin-top: 50rpx;">
-					{{v.type}} : {{v.copySrc}}
+			<view v-if=" typeStr =='fpdy'">
+				<view scroll-y="true" v-for="(item,index) in article" style="margin-top: 40rpx;">
+					<span class="movie_title">{{index+1}}.{{item.title}}</span>
+					<view style="height:40rpx"></view>
+					<uni-card v-for="(v,i) in item.data" mode="basic" :is-shadow="false" :isFull="true" note="true"
+						style="margin-top: 50rpx;">
+						{{v.type}} : {{v.copySrc}}
 
-					<template v-slot:footer>
-						<view class="footer-box">
-							<view @click="copySrc(`${v.copySrc}`)">复制链接</view>
-							<view @click="getDetails(`${item.detail_src}`)">查看详情</view>
-						</view>
-					</template>
+						<template v-slot:footer>
+							<view class="footer-box">
+								<view @click="copySrc(`${v.copySrc}`)">复制链接</view>
+								<view @click="getDetails(`${item.detail_src}`,'fpdy')">查看详情</view>
+							</view>
+						</template>
 
-				</uni-card>
-
-
-				<!-- <text selectable="true"></text> -->
+					</uni-card>
+				</view>
 			</view>
+
+
+			<view v-if=" typeStr =='btdx'">
+				<view scroll-y="true" style="margin-top: 40rpx;">
+					<uni-list v-for="(item,index) in article" :border="false" style=''>
+						<uni-list-item :title="`{{index+1}}.{{item.title}}`" :note='`{{item.date}}`' :key='index'
+							:thumb="item.imgSrc" rightText="点击查看" :clickable='true'
+							@click="getDetails(`${item.blankSrc}`,'btdx')">
+						</uni-list-item>
+					</uni-list>
+				</view>
+			</view>
+
+
 		</view>
 
 		<view style="text-align: left;padding: 28rpx;text-indent:2em;color: #ccc;">
@@ -84,30 +97,30 @@
 	export default {
 		data() {
 			return {
+				notice_text: '让每个人都能享受到电影带来的乐趣！\n 微信小程序搜索：痕迹电影',
 				title: 'Hello',
 				searchKey: '',
 				searchTitle: '',
 				article: [],
 				ishow_use: true,
 				ban_KeyList: ["av"],
-				// good_KeyList: ["褚明朕", "王鲁", "季永亮", "崔宇烁", "宋元鑫"],
+				typeStr: 'fpdy',
 				use_about: [
-					"1.磁力链接：使用迅雷等bt工具下载magnet",
-					"2.ftp链接：使用迅雷等工具下载ftp",
-					"3.电驴ed2k链接：使用迅雷、百度网盘离线下载ed2k",
-					"4.迅雷云盘、阿里云盘、百度网盘等直接观看",
+					// "1.磁力链接：使用迅雷等bt工具下载magnet",
+					// "2.ftp链接：使用迅雷等工具下载ftp",
+					// "3.电驴ed2k链接：使用迅雷、百度网盘离线下载ed2k",
+					// "4.迅雷云盘、阿里云盘、百度网盘等直接观看",
 				],
-
 			}
 		},
-		onLoad() {
-
-		},
+		onLoad() {},
 		methods: {
 
-			getDetails(value) {
+			getDetails(value,type) {
+				let data = JSON.stringify({src:value,type:type})
+				
 				uni.navigateTo({
-					url: '/pages/more/details?src=' + value
+					url: '/pages/more/details?data=' +encodeURIComponent(data) 
 				});
 			},
 			copySrc(value) {
@@ -134,18 +147,6 @@
 			},
 
 			async getSearch(typeStr) {
-
-				// if (!this.checkLogin()) {
-				// 	uni.showToast({
-				// 		title: "该功能登陆后使用~",
-				// 		icon: "none",
-				// 		position: 'bottom',
-				// 		duration: 3000
-				// 	})
-				// 	return false
-				// }
-
-
 				let searchKey = this.searchKey
 				this.article.length = 0
 				if (!searchKey) {
@@ -161,23 +162,15 @@
 					return false
 				}
 
-				if (searchKey == "王孟英") {
-					this.ishow_use = false
-					this.searchTitle = "是那个男人！"
-					return false
-				}
-
-
 
 				let postData = {
-						searchKey,
-						typeStr
+					searchKey,
+					typeStr
 				}
 				this.showLoading("搜索中")
-				await getDownloadSrc(postData 
-					)
+
+				await getDownloadSrc(postData)
 					.then((res) => {
-						console.log(res)
 						if (res.status !== 200) {
 							this.hideLoading()
 							uni.showToast({
@@ -194,13 +187,14 @@
 						this.ishow_use = false
 						this.searchTitle = res.data.title
 						this.article = res.data.data_array
+						this.typeStr = res.data.typeStr
 						this.hideLoading()
 
 					})
 					.catch((err) => {
 						console.log(err)
 						uni.showToast({
-							title: "请求失败！请联系管理员！",
+							title: "请求失败！请联系客服！",
 							icon: "none",
 							position: 'bottom',
 							duration: 3000
@@ -210,41 +204,32 @@
 
 			},
 
-			// markSrc(value) {
-
-				// uni.showToast({
-				// 	title: "该功能陆续开发中~",
-				// 	icon: "none",
-				// 	position: 'bottom',
-				// 	duration: 3000
-				// })
-				// return false
-
-
-				// uni.showModal({
-				// 	content: value,
-				// 	confirmText: '收藏内容',
-				// 	success: (res) => {
-				// 		if (res.confirm) {
-				// 			uni.showToast({
-				// 				title: '收藏成功'
-				// 			})
-				// 		} else {
-				// 			console.log("取消复制")
-				// 		}
-
-				// 	},
-
-				// });
-			// }
-
 		}
 	}
 </script>
 
 <style lang="scss">
+	button::after {
+		border: none;
+	}
+
+	.center {
+		text-align: center;
+	}
+
 	.banner {
 		padding: 40rpx;
+
+		.uni-list-item {
+			border-top: 2rpx solid #ccc;
+		}
+
+		.uni-list-item__container {
+			.uni-list--base {
+				height: 191rpx;
+				width: 142rpx;
+			}
+		}
 
 		.use_title {
 			padding-left: 10rpx;
@@ -252,17 +237,31 @@
 			font-weight: 600;
 		}
 
+		.bar>view {
+			border-radius: 30rpx;
+		}
+
 		.search {
-			margin-top: 50rpx;
+			margin-top: 30rpx;
 			font-size: 20rpx;
 
+			.uni-easyinput__content {
+				border-radius: 30rpx;
+			}
 
 			input {
-				height: 80rpx;
+				font-size: 35rpx;
+				height: 100rpx;
+				border-radius: 30rpx;
+
 			}
 
 			button {
+				color: #4d4442;
+				height: 100rpx;
+				border-radius: 30rpx;
 				margin-top: 20rpx;
+				border: 1px solid #e5e5e5;
 			}
 
 

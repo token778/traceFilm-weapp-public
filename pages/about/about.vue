@@ -14,14 +14,13 @@
 			<view style="text-indent:2em;">
 				<span style="font-weight:bold;">痕迹电影</span>
 				开发的初衷就是方便自己快速的搜索电影；
-				所以后续的开发都是以用户的角度去考虑如何更方便的去使用这个小程序；
 				我作为互联网的受益者,也希望能为传播经典优良的影视资料做出一点贡献；
 				如果你觉得本站有益于你，还请你顺手转发宣传一下！
 			</view>
 
 			<view style="text-indent:2em;">
 				<span style="font-weight:bold;">痕迹电影</span>
-				既不会收费也不会推广广告；纯纯的为爱发电！让每个人都能享受到电影带来的乐趣!
+				纯纯的为爱发电！让每个人都能享受到电影带来的乐趣!
 			</view>
 
 
@@ -29,7 +28,7 @@
 
 		<uni-card mode="basic" style="margin-top: 50rpx;" title="联系我们" >
 
-			小白初学上路，欢迎各位大佬指导互相交流学习。
+			小白初学上路，欢迎大佬指导交流学习。
 
 			<br>
 			开发者：wangtaishuai<br>

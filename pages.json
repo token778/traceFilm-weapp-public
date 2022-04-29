@@ -3,13 +3,13 @@
 	{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "搜索页"
+			"navigationBarTitleText": "痕迹电影-搜索"
 		}
 	},
 	{
 		"path": "pages/home/home",
 		"style": {
-			"navigationBarTitleText": "个人中心"
+			"navigationBarTitleText": "痕迹电影-个人中心"
 		}
 	},
 
@@ -65,11 +65,12 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "记忆劫匪",
+		"navigationBarTitleText": "痕迹电影",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#fff"
 	},
 	"tabBar": {
+		
 		"color": "#ccc",
 		"selectedColor": "#000",
 		"backgroundColor": "#fff",

@@ -1,8 +1,5 @@
 <template>
 	<view v-if="isShow" style="padding-top: 20rpx;">
-<!-- 		<view style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
-			<img v-if="details.img_src" :src="details.img_src"></img>
-		</view> -->
 		<view>
 			<h1 style="text-align: center;font-weight: bold;"></h1>
 			<uni-card :title="details.title">
@@ -12,9 +9,6 @@
 				
 				<rich-text :nodes="details.info"></rich-text>
 			</uni-card>
-
-
-
 		</view>
 
 		<view>
@@ -61,7 +55,9 @@
 			uni.showLoading({
 				title: '加载中'
 			});
-			this.getDetails(option.src)
+			let data = JSON.parse(decodeURIComponent(option.data) )
+			console.log(data)
+			this.getDetails(data.src,data.type)
 		},
 		methods: {
 			copySrc(value) {
@@ -87,9 +83,9 @@
 				});
 			},
 
-			async getDetails(src) {
+			async getDetails(src,type) {
 				console.log(src)
-				await getMore(src)
+				await getMore(src,type)
 					.then((res) => {
 
 						if (res.status !== 200) {
@@ -105,10 +101,6 @@
 
 
 						this.details = res.data
-						console.log(this.details)
-
-
-
 						uni.hideLoading()
 						this.isShow = true
 						return false

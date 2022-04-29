@@ -22,12 +22,13 @@ let getDownloadSrc = function(postData) {
 }
 
 
-let getMore = function(searchKey) {
+let getMore = function(src, type) {
 	return new Promise((resolve, reject) => {
 		wx.cloud.callFunction({
 			name: 'getMore',
 			data: {
-				searchKey,
+				detailSrc: src,
+				typeStr: type,
 				nickName: Vue.prototype.nickName,
 				time: Vue.prototype.getTime()
 			},

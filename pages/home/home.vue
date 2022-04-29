@@ -32,9 +32,9 @@
 
 						<template slot="body">
 							<button style="width: 100%;height: 100%;position: absolute;top: 0;left: 0;opacity: 0;"
-								open-type='contact'>在线客服</button>
+								open-type='contact'>客服留言</button>
 							<span style="line-height: 60rpx;">
-								在线客服
+								客服留言
 							</span>
 						</template>
 
@@ -79,7 +79,7 @@
 					<uni-list-item showArrow>
 
 						<view slot="header" class="slot-box">
-							<image class="mini-img" src="/static/images/分享.png"></image>
+							<image class="mini-img" src="/static/images/share.png"></image>
 						</view>
 
 						<template slot="body">
@@ -92,12 +92,6 @@
 
 
 					</uni-list-item>
-
-
-
-
-
-
 
 				</uni-list>
 			</uni-card>
