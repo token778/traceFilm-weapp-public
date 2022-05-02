@@ -1,33 +1,28 @@
 <template>
 	<view class="banner">
 
+		<!-- 公告栏 -->
 		<view>
-			<!-- <uni-notice-bar showIcon="true" text="让每个人都能享受到电影带来的乐趣!"></uni-notice-bar> -->
 			<uni-notice-bar class='bar' showIcon="true" :text='notice_text'>
 			</uni-notice-bar>
 		</view>
-
+		<!-- 搜索框 -->
 		<view class="search">
 			<uni-easyinput clearable type="text" v-model="searchKey" placeholder="请输入影视关键字来搜索"
 				placeholder-class="center" maxlength=20 clearSize=30 confirmType="search">
 			</uni-easyinput>
-			<button @click="getSearch('fpdy')" style="display: flex; justify-content: center;">
-				搜索
-				<view style="color: #CCCCCC;padding-left: 10rpx;">
-					(来源:fpdy)
-				</view>
-
-
-			</button>
-			<button @click="getSearch('btdx')" style="display: flex; justify-content: center;">
-				搜索
-				<view style="color: #CCCCCC;padding-left: 10rpx;">
-					(来源:btdx)
-				</view>
-
-
-			</button>
+			<!-- 搜索按钮 -->
+			<view v-for="site in searchSite">
+				<button @click="getSearch(site)" style="display: flex; justify-content: center;">
+					搜索
+					<view style="color: #CCCCCC;padding-left: 10rpx;">
+						(来源:{{site}})
+					</view>
+				</button>
+			</view>
 		</view>
+
+		<!-- 使用帮助 -->
 		<view v-if="ishow_use">
 			<ul>
 				<li v-for="item in use_about" style="margin-top: 10rpx;">
@@ -37,10 +32,9 @@
 			</ul>
 		</view>
 
-
+		<!-- 搜索结果展示 -->
 		<view class="srcbox">
 			<view style="color:#4d4442">{{searchTitle}}</view>
-
 			<view v-if=" typeStr =='fpdy'">
 				<view scroll-y="true" v-for="(item,index) in article" style="margin-top: 40rpx;">
 					<span class="movie_title">{{index+1}}.{{item.title}}</span>
@@ -60,10 +54,9 @@
 				</view>
 			</view>
 
-
-			<view v-if=" typeStr =='btdx'">
+			<view v-if=" typeStr =='btdx' ">
 				<view scroll-y="true" style="margin-top: 40rpx;">
-					<uni-list v-for="(item,index) in article" :border="false" style=''>
+					<uni-list v-for="(item,index) in article" :border="false">
 						<uni-list-item :title="`{{index+1}}.{{item.title}}`" :note='`{{item.date}}`' :key='index'
 							:thumb="item.imgSrc" rightText="点击查看" :clickable='true'
 							@click="getDetails(`${item.blankSrc}`,'btdx')">
@@ -73,8 +66,23 @@
 			</view>
 
 
+			<view v-if="typeStr == 'btba'">
+				<view scroll-y="true" style="margin-top: 40rpx;">
+					<uni-list v-for="(item,index) in article" :border="false">
+						<uni-list-item :title="`{{item.title}}`" :note='`{{item.date}}`' :key='index' thumbSize='lg'
+							:thumb="base64_img" rightText="点击查看" :clickable='true'
+							@click="getDetails(`${item.blankSrc}`,'btba')">
+						</uni-list-item>
+					</uni-list>
+				</view>
+			</view>
+
+
+
+
 		</view>
 
+		<!-- 免责声明 -->
 		<view style="text-align: left;padding: 28rpx;text-indent:2em;color: #ccc;">
 			本站所有资源均来自互联网，本站只提供展示，并不提供影片资源存储，本站也不参与录制、上传,仅供网吧及个人用户测试带宽使用，请于下载后24小时内删除，版权归原电影公司所有。
 			</p>
@@ -92,18 +100,19 @@
 
 <script>
 	import {
-		getDownloadSrc
+		getDownloadSrc,
+		getImg
 	} from '../../api/index.js'
 	export default {
 		data() {
 			return {
+				searchSite: ['btba', 'fpdy', 'btdx'],
 				notice_text: '让每个人都能享受到电影带来的乐趣！\n 微信小程序搜索：痕迹电影',
-				title: 'Hello',
 				searchKey: '',
 				searchTitle: '',
 				article: [],
 				ishow_use: true,
-				ban_KeyList: ["av"],
+				ban_KeyList: ["av", 'AV'],
 				typeStr: 'fpdy',
 				use_about: [
 					// "1.磁力链接：使用迅雷等bt工具下载magnet",
@@ -111,18 +120,34 @@
 					// "3.电驴ed2k链接：使用迅雷、百度网盘离线下载ed2k",
 					// "4.迅雷云盘、阿里云盘、百度网盘等直接观看",
 				],
+				base64_img: '',
 			}
 		},
 		onLoad() {},
 		methods: {
+			// async getImg(typeStr, imgSrc) {
+			// 	let postData = {
+			// 		srcStr,
+			// 		typeStr
+			// 	}
+			// 	await getImg(postData).then((data) => {
+			// 		let buffer = data.data.res.data
+			// 		let base64 = wx.arrayBufferToBase64(buffer);
+			// 		let base64_url = base64.replace(/[\r\n]/g, "")
+			// 		this.base64_img = 'data:image/png;base64,' + base64_url
+			// 	})
+			// },
+			getDetails(value, type) {
+				let data = JSON.stringify({
+					src: value,
+					type: type
+				})
 
-			getDetails(value,type) {
-				let data = JSON.stringify({src:value,type:type})
-				
 				uni.navigateTo({
-					url: '/pages/more/details?data=' +encodeURIComponent(data) 
+					url: '/pages/more/details?data=' + encodeURIComponent(data)
 				});
 			},
+
 			copySrc(value) {
 				uni.showModal({
 					content: value,

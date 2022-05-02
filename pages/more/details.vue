@@ -3,26 +3,46 @@
 		<view>
 			<h1 style="text-align: center;font-weight: bold;"></h1>
 			<uni-card :title="details.title">
-				
-				<img v-if="details.img_src" :src="details.img_src"></img>
-				<span>更新时间：{{details.time}}</span>
-				
+				<view v-if="details.typeStr == 'btba'">
+					<img :src="base64_img"></img>
+				</view>
+				<view v-else>
+					<img v-if="details.img_src" :src="details.img_src"></img>
+					<span>更新时间：{{details.time}}</span>
+				</view>
 				<rich-text :nodes="details.info"></rich-text>
 			</uni-card>
 		</view>
 
 		<view>
 			<uni-card v-for="(v,i) in details.data_array" :is-shadow="true" note="true">
-				{{v.type}} : {{v.copySrc}}
+
+				<view v-if="details.typeStr == 'btba'">
+					{{v.copySrc}}
+				</view>
+
+				<view v-else>
+					{{v.type}} :{{v.copySrc}}
+				</view>
+
 
 				<template v-slot:footer>
 					<view class="footer-box">
-						<view @click="copySrc(`${v.copySrc}`)">复制链接</view>
+						<view v-if="details.typeStr == 'btba'" @click="openBtbaDownSrc('btba_src',`${v.href}`)">查看链接
+						</view>
+						<view v-else @click="copySrc(`${v.copySrc}`)">复制链接</view>
 						<!-- <view @click="markSrc(`${v.copySrc}`)">收藏</view> -->
 					</view>
 				</template>
 
 			</uni-card>
+
+			<uni-popup ref="popup" background-color="#fff">
+				<view>
+					<button @click="copySrc(btbaDownSrc.magnet)">复制磁力链接</button>
+					<button @click="copySrc(btbaDownSrc.xl)">复制迅雷链接</button>
+				</view>
+			</uni-popup>
 		</view>
 
 
@@ -40,7 +60,9 @@
 
 <script>
 	import {
-		getMore
+		getMore,
+		getImg,
+		getBtbaDownSrc
 	} from '../../api/index.js'
 
 	export default {
@@ -48,18 +70,61 @@
 			return {
 				isShow: false,
 				movie_list: [],
-				details: {}
+				details: {},
+				base64_img: '',
+				btbaDownSrc: []
 			}
 		},
 		onLoad(option) {
 			uni.showLoading({
 				title: '加载中'
 			});
-			let data = JSON.parse(decodeURIComponent(option.data) )
-			console.log(data)
-			this.getDetails(data.src,data.type)
+			let data = JSON.parse(decodeURIComponent(option.data))
+			let postData = {
+				detailSrc: data.src,
+				typeStr: data.type
+			}
+			this.getDetails(postData)
 		},
 		methods: {
+			async openBtbaDownSrc(typeStr, srcStr) {
+				uni.showLoading({
+					title: '加载中'
+				});
+				await this.getDownSrc(typeStr, srcStr)
+				this.hideLoading()
+				this.$refs.popup.open('top')
+				console.log(this.btbaDownSrc)
+			},
+
+			async getDownSrc(typeStr, srcStr) {
+				let postData = {
+					srcStr,
+					typeStr
+				}
+
+				await getBtbaDownSrc(postData).then((data) => {
+					this.btbaDownSrc = data.data
+				})
+
+
+			},
+
+
+			async getImg(typeStr, srcStr) {
+				let postData = {
+					srcStr,
+					typeStr
+				}
+				await getImg(postData).then((data) => {
+					let buffer = data.data.res.data
+					let base64 = wx.arrayBufferToBase64(buffer);
+					let base64_url = base64.replace(/[\r\n]/g, "")
+					this.base64_img = 'data:image/png;base64,' + base64_url
+				})
+			},
+
+
 			copySrc(value) {
 				uni.showModal({
 					content: value,
@@ -83,9 +148,8 @@
 				});
 			},
 
-			async getDetails(src,type) {
-				console.log(src)
-				await getMore(src,type)
+			async getDetails(postData) {
+				await getMore(postData)
 					.then((res) => {
 
 						if (res.status !== 200) {
@@ -103,6 +167,7 @@
 						this.details = res.data
 						uni.hideLoading()
 						this.isShow = true
+						this.getImg('btba', this.details.img_src)
 						return false
 
 

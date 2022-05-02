@@ -1,4 +1,3 @@
-
 <script>
 	export default {
 		onLaunch: function() {
@@ -17,9 +16,8 @@
 
 		},
 
-		onHide: function() {},  
+		onHide: function() {},
 	}
-
 </script>
 
 <style>
