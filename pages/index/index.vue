@@ -13,7 +13,7 @@
 			</uni-easyinput>
 			<!-- 搜索按钮 -->
 			<view v-for="site in searchSite">
-				<button @click="getSearch(site)" style="display: flex; justify-content: center;">
+				<button plain   @click="getSearch(site)" style="display: flex; justify-content: center;">
 					搜索
 					<view style="color: #CCCCCC;padding-left: 10rpx;">
 						(来源:{{site}})
@@ -106,7 +106,7 @@
 	export default {
 		data() {
 			return {
-				searchSite: ['btba', 'fpdy', 'btdx'],
+				searchSite: ['fpdy', 'btba',  'btdx'],
 				notice_text: '让每个人都能享受到电影带来的乐趣！\n 微信小程序搜索：痕迹电影',
 				searchKey: '',
 				searchTitle: '',

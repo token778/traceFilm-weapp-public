@@ -32,7 +32,12 @@
 				"navigationBarTitleText": "更多"
 			}
 		},
-
+{
+			"path": "pages/about/map",
+			"style": {
+				"navigationBarTitleText": "电影导航"
+			}
+		},
 		
 
 		{

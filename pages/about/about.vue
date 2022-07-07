@@ -1,5 +1,5 @@
 <template>
-	<view style="margin-bottom:80px ;">
+	<view style="padding-bottom:40px ;">
 		<uni-card mode="basic" style="margin-top: 50rpx;" title="免责声明">
 			1.本站(痕迹电影)所有资源均来自互联网，本站只提供展示，并不提供影片资源存储，本站也不参与录制、上传，仅供网吧及个人用户测试带宽使用，请于下载后24小时内删除，版权归原电影公司所有。
 			<br>
@@ -28,15 +28,14 @@
 
 		<uni-card mode="basic" style="margin-top: 50rpx;" title="联系我们" >
 
-			小白初学上路，欢迎大佬指导交流学习。
 
-			<br>
+<!-- 			<br>
 			开发者：wangtaishuai<br>
-			<br>
-			QQ/WeChat：37661713
+			<br> -->
 			<!-- <br> -->
-			<!-- WeChat：token778 -->
+			WeChat：token778
 		</uni-card>
+		<br>
 
 	</view>
 </template>

@@ -25,6 +25,15 @@
 		<view>
 			<uni-card isShadow="true" style="border-radius: 20rpx;">
 				<uni-list>
+					<uni-list-item link to="/pages/about/map">
+						<template slot="header">
+							<image class="mini-img" src="/static/images/地图导航.png"></image>
+							<span style="line-height: 10rpx;">
+								电影导航
+							</span>
+						</template>
+					</uni-list-item>
+					
 					<uni-list-item showArrow>
 						<view slot="header" class="slot-box">
 							<image class="mini-img" src="/static/images/wechat.png"></image>
