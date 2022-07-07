@@ -27,7 +27,7 @@
 				<uni-list>
 					<uni-list-item link to="/pages/about/map">
 						<template slot="header">
-							<image class="mini-img" src="/static/images/地图导航.png"></image>
+							<image class="mini-img" src="/static/images/map.png"></image>
 							<span style="line-height: 10rpx;">
 								电影导航
 							</span>
