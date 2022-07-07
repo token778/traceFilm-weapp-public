@@ -3,13 +3,13 @@
 	{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "痕迹电影-搜索"
+			"navigationBarTitleText": "痕迹电影"
 		}
 	},
 	{
 		"path": "pages/home/home",
 		"style": {
-			"navigationBarTitleText": "痕迹电影-个人中心"
+			"navigationBarTitleText": "痕迹电影"
 		}
 	},
 

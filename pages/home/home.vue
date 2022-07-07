@@ -1,39 +1,55 @@
 <template>
-	<view>
+	<view style="opacity: 0.8;">
 
-		<view class="header">
-			<view v-if="isLogin" class="header">
-				<image class="avatar" :src="avatarUrl"></image>
+		<view class="header" style="opacity: 0.6;padding-top: 100rpx;">
+			<image src="https://img9.doubanio.com/view/activity_page/raw/public/5456.jpg" mode="scaleToFill"
+				style='position: absolute;z-index: -99;' >
+					<view style="
+    color: #fff;position: absolute;left: 50rpx
+;">
+						<em style='font-size: 33rpx;'>无处不在的屏幕，</em>
+						<em style='font-size: 35rpx;'> 似乎没有尽头的推荐流，</em>
+						<em style='font-size: 37rpx;'>带我们进入前所未有的影像时代，</em>
+						<em style='font-size: 37rpx;'> 而电影依然是影响叙事中</em>
+						<em style='font-size: 40rpx;border-bottom: 2px #fff solid;display: inline-block;'> 最迷人的一环，</em>
+						<em style='font-size: 37rpx;'> 它延展了我们的生命，</em>
+						<em style='font-size: 32rpx;'> 亦成为</em>
+						<em style='font-size: 40rpx;border-bottom: 2px #fff solid;display: inline-block;'> 时代的珍贵脚注。</em>
+					</view>
 
-				<!-- <open-data type="userAvatarUrl"></open-data> -->
+					<view v-if='false'>
+						<view v-if="isLogin">
+							<image class="avatar" :src="avatarUrl"></image>
 
-				<text>{{nickName}}</text>
+							<!-- <open-data type="userAvatarUrl"></open-data> -->
 
-				<span @click="logout" class="logout" plain="true">
-					<image class="outIcon" src="/static/logo/out.png"><text>退出</text>
-				</span>
-			</view>
-			<view v-else>
-				<button @click="this.getUserProfile()"
-					style="margin-top: 150rpx;width: 350rpx;height: 90rpx;border-radius: 100rpx;">
-					<span style="font-weight: 500;">登 录</span>
-				</button>
-			</view>
+							<text>{{nickName}}</text>
 
-
+							<span @click="logout" class="logout" plain="true">
+								<!-- <image class="outIcon" src="/static/logo/out.png"><text>退出</text> -->
+								<image class="outIcon" src="/static/images/aosika.jpg"><text>退出</text>
+							</span>
+						</view>
+						<view v-else>
+							<button @click="this.getUserProfile()"
+								style="margin-top: 150rpx;width: 350rpx;height: 90rpx;border-radius: 100rpx;">
+								<span style="font-weight: 500;">登 录</span>
+							</button>
+						</view>
+					</view>
 		</view>
-		<view>
+		<view style="padding-top: 50rpx;">
 			<uni-card isShadow="true" style="border-radius: 20rpx;">
 				<uni-list>
 					<uni-list-item link to="/pages/about/map">
 						<template slot="header">
 							<image class="mini-img" src="/static/images/map.png"></image>
 							<span style="line-height: 10rpx;">
-								电影导航
+								资源导航
 							</span>
 						</template>
 					</uni-list-item>
-					
+
 					<uni-list-item showArrow>
 						<view slot="header" class="slot-box">
 							<image class="mini-img" src="/static/images/wechat.png"></image>
@@ -41,9 +57,9 @@
 
 						<template slot="body">
 							<button style="width: 100%;height: 100%;position: absolute;top: 0;left: 0;opacity: 0;"
-								open-type='contact'>客服留言</button>
+								open-type='contact'>建议留言</button>
 							<span style="line-height: 60rpx;">
-								客服留言
+								建议留言
 							</span>
 						</template>
 
@@ -62,7 +78,7 @@
 
 
 
-				<!-- 	<uni-list-item link to="/pages/logs/logs">
+					<!-- 	<uni-list-item link to="/pages/logs/logs">
 						<template slot="header">
 							<image class="mini-img" src="/static/images/fankui.png"></image>
 							<span>
@@ -106,7 +122,7 @@
 			</uni-card>
 
 
-			<uni-popup ref="popup" type="dialog">
+			<!-- <uni-popup ref="popup" type="dialog">
 				<uni-popup-dialog mode="input" title="意见反馈" :duration="2000" :before-close="true" @close="close"
 					@confirm="confirm(value)">
 
@@ -118,7 +134,7 @@
 					</template>
 
 				</uni-popup-dialog>
-			</uni-popup>
+			</uni-popup> -->
 
 
 		</view>
@@ -252,6 +268,12 @@
 		}
 	}
 </script>
+<style>
+	page {
+		background-color: #000;
+		height: 100%;
+	}
+</style>
 
 <style lang="scss">
 	.uni-card.uni-border .uni-card__content {
@@ -276,7 +298,7 @@
 
 	.header {
 		width: 100%;
-		background-color: #41be57;
+		// background-color: #41be57;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

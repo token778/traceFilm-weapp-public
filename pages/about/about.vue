@@ -20,19 +20,13 @@
 
 			<view style="text-indent:2em;">
 				<span style="font-weight:bold;">痕迹电影</span>
-				纯纯的为爱发电！让每个人都能享受到电影带来的乐趣!
+				为爱发电！让每个人都能享受到电影带来的乐趣!
 			</view>
 
 
 		</uni-card>
 
-		<uni-card mode="basic" style="margin-top: 50rpx;" title="联系我们" >
-
-
-<!-- 			<br>
-			开发者：wangtaishuai<br>
-			<br> -->
-			<!-- <br> -->
+		<uni-card mode="basic" style="margin-top: 50rpx;" title="联系方式" >
 			WeChat：token778
 		</uni-card>
 		<br>
