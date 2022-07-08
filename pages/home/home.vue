@@ -1,12 +1,11 @@
 <template>
-	<view style="opacity: 0.8;">
+	<view style="opacity: 0.9;">
 
-		<view class="header" style="opacity: 0.6;padding-top: 100rpx;">
+		<view class="header" style="opacity: 0.9;padding-top: 100rpx;">
 			<image src="https://img9.doubanio.com/view/activity_page/raw/public/5456.jpg" mode="scaleToFill"
-				style='position: absolute;z-index: -99;' >
+				style='position: absolute;z-index: -99;opacity: 0.6;width: 1000rpx;' >
 					<view style="
-    color: #fff;position: absolute;left: 50rpx
-;">
+    color: #fff;position: absolute;left: 50rpx;white-space: 2rpx;letter-spacing: 4rpx;line-height: 52rpx;">
 						<em style='font-size: 33rpx;'>无处不在的屏幕，</em>
 						<em style='font-size: 35rpx;'> 似乎没有尽头的推荐流，</em>
 						<em style='font-size: 37rpx;'>带我们进入前所未有的影像时代，</em>
